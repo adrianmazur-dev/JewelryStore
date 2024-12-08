@@ -1,22 +1,49 @@
-html {
-  font-size: 14px;
+/* Custom styles for the site */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f5f5f5;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* Navbar styles */
+.navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.navbar-brand {
+    font-weight: 600;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+/* Footer styles */
+footer {
+    margin-top: auto;
 }
 
+.social-links a {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* General styles */
 body {
-  margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+/* Utility classes */
+.shadow-hover {
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-hover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }

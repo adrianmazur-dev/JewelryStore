@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using JewelryStore.Web.Models;
+using JewelryStore.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JewelryStore.Web.Controllers
@@ -15,7 +16,18 @@ namespace JewelryStore.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new HomeViewModel
+            {
+                FeaturedProducts = new List<ProductViewModel>
+                {
+                    new() { Name = "Gold Necklace" },
+                    new() { Name = "Diamond Ring"},
+                    new() { Name = "Silver Bracelet"}
+                },
+                NewsletterEnabled = true
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<JewelryStore.Web.ViewModels.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container">
+    <h2>Our Products</h2>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text">Created at: @item.CreatedAt</p>
+                        <p class="card-text">Created at: @item.UpdatedAt</p>
+                        @if
+						(item.Category != null)
+						{
+							<p class="card-text">Category: @item.Category.Name</p>
+						})
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

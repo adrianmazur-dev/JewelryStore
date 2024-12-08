@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JewelryStore.Application\JewelryStore.Application.csproj" />
+    <ProjectReference Include="..\JewelryStore.Domain\JewelryStore.Domain.csproj" />
     <ProjectReference Include="..\JewelryStore.Infrastructure\JewelryStore.Infrastructure.csproj" />
   </ItemGroup>
 

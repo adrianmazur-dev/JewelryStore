@@ -1,0 +1,36 @@
+﻿@model IEnumerable<JewelryStore.Application.DTOs.CategoryDto>
+
+<ul class="dropdown-menu dropdown-menu-animated" aria-labelledby="categoryDropdown">
+    @foreach (var category in Model)
+    {
+        <li>
+            <a class="dropdown-item" href="@Url.Action("Index", "Product", new { categoryId = category.Id })">
+                <i class="bi bi-@category.Icon me-2"></i>@category.Name
+                @if (category.SubCategories.Any())
+                {
+                    <i class="bi bi-chevron-right float-end"></i>
+                }
+            </a>
+            @if (category.SubCategories.Any())
+            {
+                <ul class="dropdown-menu dropdown-submenu shadow">
+                    @foreach (var subCategory in category.SubCategories)
+                    {
+                        <li>
+                            <a class="dropdown-item"
+                               href="@Url.Action("Index", "Product", new { categoryId = subCategory.Id })">
+                                @subCategory.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+    <li><hr class="dropdown-divider"></li>
+    <li>
+        <a class="dropdown-item" href="@Url.Action("Index", "Product")">
+            <i class="bi bi-tags me-2"></i>View All Products
+        </a>
+    </li>
+</ul>
