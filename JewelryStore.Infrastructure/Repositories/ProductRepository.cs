@@ -31,6 +31,14 @@ namespace JewelryStore.Infrastructure.Repositories
             return await _context.Products.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Product>> GetByCategoryIdAsync(int categoryId)
+        {
+            return await _context.Products
+                .Where(p => p.CategoryId == categoryId)
+                .Include(p => p.Category)
+                .ToListAsync();
+        }
+
         public Task<Product> AddAsync(Product product)
         {
             throw new NotImplementedException();

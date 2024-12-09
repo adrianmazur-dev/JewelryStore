@@ -1,44 +1,40 @@
 using System.Diagnostics;
+using AutoMapper;
+using JewelryStore.Application.Interfaces;
 using JewelryStore.Web.Models;
-using JewelryStore.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JewelryStore.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IProductService productService,
+            IMapper mapper) : base(mapper, logger)
         {
-            _logger = logger;
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
-        public IActionResult Index()
+        public Task<IActionResult> Index() => ExecuteWithErrorHandlingAsync(async () =>
         {
-            var viewModel = new HomeViewModel
+            var products = await _productService.GetAllProductsAsync();
+            return new HomeViewModel
             {
-                FeaturedProducts = new List<ProductViewModel>
-                {
-                    new() { Name = "Gold Necklace" },
-                    new() { Name = "Diamond Ring"},
-                    new() { Name = "Silver Bracelet"}
-                },
+                FeaturedProducts = Mapper.Map<List<ProductViewModel>>(products),
                 NewsletterEnabled = true
             };
+        }, "Failed to load home page");
 
-            return View(viewModel);
-        }
+        public IActionResult Privacy() => View();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error() => View(new ErrorViewModel
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+        });
     }
 }

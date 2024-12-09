@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using JewelryStore.Application.DTOs;
-using JewelryStore.Web.ViewModels;
+using JewelryStore.Web.Models;
 
 namespace JewelryStore.Web.Mappings
 {

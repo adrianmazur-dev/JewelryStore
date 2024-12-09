@@ -1,0 +1,20 @@
+﻿<div class="col-md-4 mb-4">
+	<div class="card">
+		<a href="@Url.Action("Details", "Product", new { productId = Model.Id })">
+			<img src="img/placeholder.png" class="card-img-top" alt="@Model.Name">
+		</a>
+		<div class="card-body">
+			<h5 class=" card-title">
+				@Model.Name
+			</h5>
+
+			<p class="card-text">
+				@Model.Description
+			</p>
+
+			<p class="card-text">
+				123,23 PLN
+			</p>
+		</div>
+	</div>
+</div>

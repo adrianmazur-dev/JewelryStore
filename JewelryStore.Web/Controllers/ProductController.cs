@@ -1,26 +1,41 @@
 ﻿using AutoMapper;
+using JewelryStore.Application.DTOs;
 using JewelryStore.Application.Interfaces;
-using JewelryStore.Web.ViewModels;
+using JewelryStore.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JewelryStore.Web.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly IProductService _productService;
-        private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService, IMapper mapper)
+        public ProductController(
+            ILogger<ProductController> logger,
+            IProductService productService,
+            IMapper mapper) : base(mapper, logger)
         {
-            _productService = productService;
-            _mapper = mapper;
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
-        public async Task<ActionResult> Index()
+        public Task<IActionResult> Index(int? categoryId) => ExecuteWithErrorHandlingAsync(async () =>
         {
-            var products = await _productService.GetAllProductsAsync();
-            var viewModel = _mapper.Map<IEnumerable<ProductViewModel>>(products);
-            return View(viewModel);
-        }
+            IEnumerable<ProductDto> products;
+            if (categoryId.HasValue)
+            {
+                products = await _productService.GetProductByCategoryIdAsync(categoryId.Value);
+            }
+            else
+            {
+                products = await _productService.GetAllProductsAsync();
+            }
+            return Mapper.Map<IEnumerable<ProductViewModel>>(products);
+        }, "Failed to load products page");
+
+        public Task<IActionResult> Details(int productId) => ExecuteWithErrorHandlingAsync(async () =>
+        {
+            var product = await _productService.GetProductByIdAsync(productId);
+            return Mapper.Map<ProductViewModel>(product);
+        }, "Failed to load product details page");
     }
 }

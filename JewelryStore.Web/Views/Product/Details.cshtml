@@ -1,0 +1,23 @@
+﻿@model JewelryStore.Web.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>@Model.Name</h2>
+        </div>
+        <div class="card-body">
+            <img src="~/img/placeholder.png" alt="Product Image" class="img-fluid mb-3" />
+            <h5 class="card-title">Price: 12312,32 PLN</h5>
+            <p class="card-text">Description: @Model.Description</p>
+            <p class="card-text">Category: @Model.Category</p>
+            <p class="card-text">Stock: 3</p>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="@Url.Action("Index", "Product")" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
+</div>

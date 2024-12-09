@@ -1,6 +1,4 @@
-﻿using JewelryStore.Web.ViewModels;
-
-namespace JewelryStore.Web.Models
+﻿namespace JewelryStore.Web.Models
 {
     public class HomeViewModel
     {

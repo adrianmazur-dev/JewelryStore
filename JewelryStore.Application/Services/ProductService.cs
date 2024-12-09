@@ -27,6 +27,13 @@ namespace JewelryStore.Application.Services
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
+        public async Task<IEnumerable<ProductDto>> GetProductByCategoryIdAsync(int categoryId)
+        {
+            var products = await _productRepository.GetByCategoryIdAsync(categoryId);
+
+            return _mapper.Map<IEnumerable<ProductDto>>(products);
+        }
+
         public async Task<ProductDto> GetProductByIdAsync(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);

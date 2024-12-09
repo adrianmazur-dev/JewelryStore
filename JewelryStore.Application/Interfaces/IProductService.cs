@@ -10,6 +10,7 @@ namespace JewelryStore.Application.Interfaces
     public interface IProductService
     {
         Task<IEnumerable<ProductDto>> GetAllProductsAsync();
+        Task<IEnumerable<ProductDto>> GetProductByCategoryIdAsync(int categoryId);
         Task<ProductDto> GetProductByIdAsync(int id);
     }
 }

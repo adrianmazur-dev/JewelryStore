@@ -1,6 +1,6 @@
 ﻿using JewelryStore.Domain.Entities;
 
-namespace JewelryStore.Web.ViewModels
+namespace JewelryStore.Web.Models
 {
     public class ProductViewModel
     {
