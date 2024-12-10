@@ -34,8 +34,25 @@ namespace JewelryStore.Web.Controllers
 
         public Task<IActionResult> Details(int productId) => ExecuteWithErrorHandlingAsync(async () =>
         {
-            var product = await _productService.GetProductByIdAsync(productId);
+            var product = await _productService.GetByIdAsync(productId);
             return Mapper.Map<ProductViewModel>(product);
         }, "Failed to load product details page");
+
+        public Task<IActionResult> Edit(int productId) => ExecuteWithErrorHandlingAsync(async () =>
+        {
+            var product = await _productService.GetByIdAsync(productId);
+            return product;
+        }, "Failed to load product edit page");
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ProductDto model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);    
+
+            await _productService.UpdateAsync(model);
+
+            return RedirectToAction("Edit", new { productId = model.Id});
+        }
     }
 }

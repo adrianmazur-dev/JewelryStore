@@ -21,7 +21,7 @@ namespace JewelryStore.Application.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<CategoryDto>> GetAllAsync()
         {
             var categories = await _categoryRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<CategoryDto>>(categories);

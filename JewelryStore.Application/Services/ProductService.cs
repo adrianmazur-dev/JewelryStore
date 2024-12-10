@@ -34,10 +34,16 @@ namespace JewelryStore.Application.Services
             return _mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
-        public async Task<ProductDto> GetProductByIdAsync(int id)
+        public async Task<ProductDto> GetByIdAsync(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
             return _mapper.Map<ProductDto>(product);
+        }
+
+        public Task UpdateAsync(ProductDto productDto)
+        {
+            var product = _mapper.Map<Domain.Entities.Product>(productDto);
+            return _productRepository.UpdateAsync(product);
         }
     }
 }

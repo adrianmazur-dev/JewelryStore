@@ -11,6 +11,8 @@ namespace JewelryStore.Application.Interfaces
     {
         Task<IEnumerable<ProductDto>> GetAllProductsAsync();
         Task<IEnumerable<ProductDto>> GetProductByCategoryIdAsync(int categoryId);
-        Task<ProductDto> GetProductByIdAsync(int id);
+        Task<ProductDto> GetByIdAsync(int id);
+
+        Task UpdateAsync(ProductDto productDto);
     }
 }

@@ -13,7 +13,11 @@ namespace JewelryStore.Application.Mappings
     {
         public ProductMappingProfile()
         {
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>()
+                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
+
+            CreateMap<ProductDto, Product>();
         }
     }
 }

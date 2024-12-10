@@ -19,8 +19,4 @@
     <ProjectReference Include="..\JewelryStore.Infrastructure\JewelryStore.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\img\" />
-  </ItemGroup>
-
 </Project>

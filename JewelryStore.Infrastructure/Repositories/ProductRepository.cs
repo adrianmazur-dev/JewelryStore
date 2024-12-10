@@ -19,39 +19,35 @@ namespace JewelryStore.Infrastructure.Repositories
             _context = context;
         }
         
+        public async Task<Product> GetByIdAsync(int id)
+        {
+            return await _context.Products
+                .Include(p => p.Images)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public async Task<IEnumerable<Product>> GetAllAsync()
         {
             return await _context.Products
+                .Include(p => p.Images)
                 .Include(p => p.Category)
                 .ToListAsync();
-        }
-
-        public async Task<Product> GetByIdAsync(int id)
-        {
-            return await _context.Products.FindAsync(id);
         }
 
         public async Task<IEnumerable<Product>> GetByCategoryIdAsync(int categoryId)
         {
             return await _context.Products
                 .Where(p => p.CategoryId == categoryId)
+                .Include(p => p.Images)
                 .Include(p => p.Category)
                 .ToListAsync();
         }
 
-        public Task<Product> AddAsync(Product product)
+        public async Task UpdateAsync(Product product)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Product product)
-        {
-            throw new NotImplementedException();
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
         }
     }
 }

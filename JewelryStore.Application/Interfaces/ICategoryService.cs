@@ -9,7 +9,7 @@ namespace JewelryStore.Application.Interfaces
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync();
+        Task<IEnumerable<CategoryDto>> GetAllAsync();
         Task<IEnumerable<CategoryDto>> GetMainCategoriesWithSubsAsync();
     }
 }

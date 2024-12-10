@@ -19,7 +19,7 @@ namespace JewelryStore.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(int productId)
         {
-            var product = await _productService.GetProductByIdAsync(productId);
+            var product = await _productService.GetByIdAsync(productId);
             return View(_mapper.Map<ProductViewModel>(product));
         }
     }

@@ -8,8 +8,9 @@ namespace JewelryStore.Web.Mappings
     {
         public ViewModelMappingProfile()
         {
-            CreateMap<ProductDto, ProductViewModel>();
-            CreateMap<ProductViewModel, ProductDto>();
+            CreateMap<ProductDto, ProductViewModel>()
+                .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category));
         }
     }
 }

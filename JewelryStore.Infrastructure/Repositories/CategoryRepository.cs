@@ -19,6 +19,13 @@ namespace JewelryStore.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            var category = await _context.Categories
+                .FindAsync(id);
+            return category;
+        }
+
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             var categories = await _context.Categories
@@ -28,13 +35,6 @@ namespace JewelryStore.Infrastructure.Repositories
             return categories;
         }
 
-        public async Task<Category> GetByIdAsync(int id)
-        {
-            var category = await _context.Categories
-                .FindAsync(id);
-            return category;
-        }
-
         public async Task<IEnumerable<Category>> GetMainAsync()
         {
             var categories = await _context.Categories
@@ -42,23 +42,7 @@ namespace JewelryStore.Infrastructure.Repositories
                 .Where(c => c.ParentCategoryId == null)
                 .OrderBy(c => c.Order)
                 .ToListAsync();
-
             return categories;
-        }
-
-        public Task<Category> AddAsync(Category category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Category category)
-        {
-            throw new NotImplementedException();
         }
     }
 }
