@@ -1,0 +1,110 @@
+﻿@model ProductListViewModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" asp-action="List" id="filterForm">
+                        <!-- Search -->
+                        <div class="mb-3">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-control" name="search" value="@Model.CurrentSearch">
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select class="form-select" name="category">
+                                <option value="">All Categories</option>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <option value="@category.Id" selected="@(category.Id == Model.CurrentCategory)">
+                                        @category.Name
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Price Range -->
+                        <div class="mb-3">
+                            <label class="form-label">Price Range</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="number" class="form-control" name="minPrice"
+                                           placeholder="Min" value="@Model.CurrentMinPrice">
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="form-control" name="maxPrice"
+                                           placeholder="Max" value="@Model.CurrentMaxPrice">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sort -->
+                        <div class="mb-3">
+                            <label class="form-label">Sort By</label>
+                            <select class="form-select" name="sortOrder">
+                                <option value="name_asc" selected="@(Model.CurrentSortOrder == "name_asc")">Name A-Z</option>
+                                <option value="name_desc" selected="@(Model.CurrentSortOrder == "name_desc")">Name Z-A</option>
+                                <option value="price_asc" selected="@(Model.CurrentSortOrder == "price_asc")">Price Low-High</option>
+                                <option value="price_desc" selected="@(Model.CurrentSortOrder == "price_desc")">Price High-Low</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                        <a href="@Url.Action("List")" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="col-md-9">
+            <div class="row">
+                @if (!Model.Products.Any())
+                {
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            No products found matching your criteria.
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in Model.Products)
+                    {
+                        @await Component.InvokeAsync("GalleryProduct", new { productId = item.Id })
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Auto-submit form when select elements change
+            $('select').change(function() {
+                $('#filterForm').submit();
+            });
+
+            // Debounce search input
+            let timeout = null;
+            $('input[name="search"]').on('input', function() {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    $('#filterForm').submit();
+                }, 500);
+            });
+        });
+    </script>
+}

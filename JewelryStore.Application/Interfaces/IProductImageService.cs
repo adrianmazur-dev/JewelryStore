@@ -10,14 +10,16 @@ namespace JewelryStore.Application.Interfaces
 {
     public interface IProductImageService
     {
-        Task UploadImageAsync(IFormFile file, int productId);
-        Task<ProductImage> GetByIdAsync(int id);
-        Task<byte[]> GetFileMainByIdAsync(int id);
+        Task<ProductImage?> GetByIdAsync(int id);
         Task DeleteImageAsync(int id);
-
-        Task<(bool isFirst, bool isLast)> GetImagePositionAsync(int imageId);
 
         Task IncrementOrderAsync(int imageId);
         Task DecrementOrderAsync(int imageId);
+
+        Task<bool> IsFirstInOrderAsync(int imageId);
+        Task<bool> IsLastInOrderAsync(int imageId);
+
+        Task UploadImageAsync(IFormFile file, int productId);
+        Task<byte[]> GetFileMainByIdAsync(int id);
     }
 }

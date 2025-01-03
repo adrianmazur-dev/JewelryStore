@@ -19,7 +19,7 @@ namespace JewelryStore.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<ProductImage> GetByIdAsync(int id)
+        public async Task<ProductImage?> GetByIdAsync(int id)
         {
             var image = await _context.ProductImages
                 .FindAsync(id);
@@ -35,7 +35,7 @@ namespace JewelryStore.Infrastructure.Repositories
             return images;
         }
 
-        public async Task<ProductImage> GetNextOrderImageAsync(int productId, int currentOrder)
+        public async Task<ProductImage?> GetNextOrderImageAsync(int productId, int currentOrder)
         {
             return await _context.ProductImages
                 .Where(x => x.ProductId == productId && x.Order > currentOrder)
@@ -43,12 +43,28 @@ namespace JewelryStore.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<ProductImage> GetPreviousOrderImageAsync(int productId, int currentOrder)
+        public async Task<ProductImage?> GetPreviousOrderImageAsync(int productId, int currentOrder)
         {
             return await _context.ProductImages
                 .Where(x => x.ProductId == productId && x.Order < currentOrder)
                 .OrderByDescending(x => x.Order)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<ProductImage?> GetLastOrderImageAsync(int productId)
+        {
+            return await _context.ProductImages
+                .Where(x => x.ProductId == productId)
+                .OrderBy(x => x.Order)
+                .LastOrDefaultAsync();
+        }
+
+        public async Task<ProductImage?> GetFirstOrderImageAsync(int productId)
+        {
+            return await _context.ProductImages
+                .Where(x => x.ProductId == productId)
+                .OrderByDescending(x => x.Order)
+                .LastOrDefaultAsync();
         }
 
         public async Task UpdateAsync(params ProductImage[] images)
@@ -71,20 +87,6 @@ namespace JewelryStore.Infrastructure.Repositories
                 _context.ProductImages.Remove(image);
                 await _context.SaveChangesAsync();
             }
-        }
-
-        public async Task<bool> IsFirstInOrderAsync(int imageId)
-        {
-            var image = await GetByIdAsync(imageId);
-            return !await _context.ProductImages
-                .AnyAsync(x => x.ProductId == image.ProductId && x.Order < image.Order);
-        }
-
-        public async Task<bool> IsLastInOrderAsync(int imageId)
-        {
-            var image = await GetByIdAsync(imageId);
-            return !await _context.ProductImages
-                .AnyAsync(x => x.ProductId == image.ProductId && x.Order > image.Order);
         }
     }
 }

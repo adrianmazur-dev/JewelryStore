@@ -11,7 +11,7 @@ namespace JewelryStore.Web.ViewComponents
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
 
-        public GalleryProductViewComponent(IProductService productService, IMapper mapper)
+        public GalleryProductViewComponent(IProductService productService, IProductImageService productImageService, IMapper mapper)
         {
             _productService = productService;
             _mapper = mapper;

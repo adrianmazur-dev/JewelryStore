@@ -1,7 +1,19 @@
-﻿<div class="col-md-4 mb-4">
-	<div class="card">
+﻿@model JewelryStore.Web.Models.ProductViewModel
+
+@{
+	var mainImage = Model.Images.MinBy(x => x.Order);
+
+	var mainImagePath = "uploads/products/placeholder.png";
+	if (mainImage != null)
+	{
+		mainImagePath = Url.Action("Get", "ProductImage", new { id = mainImage.Id });
+	}
+}
+
+<div class="col-md-4 mb-4">
+	<div class="card" data-product-id="@Model.Id">
 		<a href="@Url.Action("Details", "Product", new { productId = Model.Id })">
-			<img src="img/placeholder.png" class="card-img-top" alt="@Model.Name">
+			<img src="@mainImagePath" class="card-img-top" alt="@Model.Name">
 		</a>
 		<div class="card-body">
 			<h5 class=" card-title">
@@ -9,13 +21,16 @@
 			</h5>
 
 			<p class="card-text">
-				@Model.Description
+				@(!string.IsNullOrEmpty(Model.Description) ? Model.Description : "No description available")
 			</p>
 
 			<p class="card-text">
 				123,23 PLN
 			</p>
 		</div>
-		<a class="btn btn-primary" href="@Url.Action("Edit", "Product", new { productId = Model.Id })">Edit</a>
+		<div class="card-footer">
+			<a class="btn btn-primary" href="@Url.Action("Details", "Product", new { productId = Model.Id })">View Details</a>
+			<a class="btn btn-secondary" href="@Url.Action("Edit", "Product", new { productId = Model.Id })">Edit</a>
+		</div>
 	</div>
 </div>

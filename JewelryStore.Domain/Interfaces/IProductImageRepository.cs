@@ -9,17 +9,16 @@ namespace JewelryStore.Domain.Interfaces
 {
     public interface IProductImageRepository
     {
-        Task<ProductImage> GetByIdAsync(int id);
+        Task<ProductImage?> GetByIdAsync(int id);
         Task<List<ProductImage>> GetByProductIdAsync(int productId);
-
-        Task<ProductImage> GetNextOrderImageAsync(int productId, int currentOrder);
-        Task<ProductImage> GetPreviousOrderImageAsync(int productId, int currentOrder);
-
-        Task<bool> IsFirstInOrderAsync(int imageId);
-        Task<bool> IsLastInOrderAsync(int imageId);
 
         Task UpdateAsync(params ProductImage[] images);
         Task AddAsync(ProductImage image);
         Task DeleteAsync(int id);
+
+        Task<ProductImage?> GetFirstOrderImageAsync(int productId);
+        Task<ProductImage?> GetNextOrderImageAsync(int productId, int currentOrder);
+        Task<ProductImage?> GetPreviousOrderImageAsync(int productId, int currentOrder);
+        Task<ProductImage?> GetLastOrderImageAsync(int productId);
     }
 }
