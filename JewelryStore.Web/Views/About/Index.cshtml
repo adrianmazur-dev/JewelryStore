@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "About Form";
+}
+
+<h1>Formularz</h1>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<form asp-action="SubmitForm" method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Imię</label>
+        <input type="text" class="form-control" id="name" name="Name" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="Email" required>
+    </div>
+    <div class="mb-3">
+        <label for="message" class="form-label">Wiadomość</label>
+        <textarea class="form-control" id="message" name="Message" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Wyślij</button>
+</form>
